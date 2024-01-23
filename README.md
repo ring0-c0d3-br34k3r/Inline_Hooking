@@ -7,7 +7,7 @@
 ________________________________________________________________________________________________________________________________________________
 
 
-# Certainly! Let's dive deeper into some key aspects of Inline Hooking in C++
+# Let's dive deeper into some key aspects of Inline Hooking in C++
 
 - Function Prologue and Epilogue :
   Prologue: This is the part of the function that sets up the stack frame. Understand how the stack is initialized and local variables are allocated.
