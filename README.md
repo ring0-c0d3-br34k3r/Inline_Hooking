@@ -108,8 +108,8 @@ ________________________________________________________________________________
          } ```
 
 - Memory Permissions :
-  Ensure the target function's memory is writable. Use : VirtualProtectcpp DWORD oldProtect; VirtualProtect(MessageBoxA, hookSize, PAGE_EXECUTE_READWRITE, 
-  &oldProtect);
+  Ensure the target function's memory is writable. Use :
+  VirtualProtectcpp DWORD oldProtect; VirtualProtect(MessageBoxA, hookSize, PAGE_EXECUTE_READWRITE, &oldProtect);
 
 - Replace the Function Start :
   Overwrite the beginning of with a jump to your hook :
