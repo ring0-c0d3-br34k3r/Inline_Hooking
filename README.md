@@ -417,6 +417,7 @@ void UninstallHook() {
 
 
 - Uninstall the Hook Function :
+
   This function "void UninstallHook()" is responsible for uninstalling the hook and restoring the original functionality.
 
   This "DWORD oldProtect;" Declares a variable to store the original memory protection of the target function.
