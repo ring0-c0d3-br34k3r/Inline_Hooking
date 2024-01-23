@@ -640,7 +640,7 @@ DWORD relativeAddress = (DWORD)HookedMessageBoxA - (DWORD)originalMessageBoxA - 
 
 ________________________________________________________________________________________________________________________________________________
 
-# let's explained this part of code deeeeply "*(DWORD*)((DWORD)originalMessageBoxA + 1) = relativeAddress;" And break Down its functionality with an example : 
+# let's explained this part of code deeply "*(DWORD*)((DWORD)originalMessageBoxA + 1) = relativeAddress;" And break Down its functionality with an example : 
 
 
 
