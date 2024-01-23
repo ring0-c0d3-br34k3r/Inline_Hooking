@@ -648,6 +648,7 @@ ________________________________________________________________________________
   *(DWORD*)((DWORD)originalMessageBoxA + 1) = relativeAddress;
 
 - Understanding the Cast and Pointer Dereferencing :
+
   (DWORD)originalMessageBoxA : This part casts originalMessageBoxA to a DWORD (Double Word), essentially treating the address as an unsigned 32-bit integer.
 
   *(DWORD*) : This indicates that we are working with a pointer to a DWORD. The * symbol denotes pointer dereferencing.
