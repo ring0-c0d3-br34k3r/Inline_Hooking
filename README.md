@@ -3,43 +3,43 @@
 # Certainly! Let's dive deeper into some key aspects of Inline Hooking in C++
 
 - Function Prologue and Epilogue :
-         Prologue: This is the part of the function that sets up the stack frame. Understand how the stack is initialized and local variables are allocated.
-         Epilogue: Deals with cleaning up the stack frame. Recognize how the function prepares for its return.
+  Prologue: This is the part of the function that sets up the stack frame. Understand how the stack is initialized and local variables are allocated.
+  Epilogue: Deals with cleaning up the stack frame. Recognize how the function prepares for its return.
 
 - Memory Permissions :
-         Inline Hooking often involves modifying memory permissions to make the target function writable. You'll typically use functions like VirtualProtect on 
-         Windows to achieve this. Be cautious not to violate memory protection and handle permissions responsibly.
+  Inline Hooking often involves modifying memory permissions to make the target function writable. You'll typically use functions like VirtualProtect on 
+  Windows to achieve this. Be cautious not to violate memory protection and handle permissions responsibly.
 
 - Detouring Techniques :
-         Explore different methods for redirecting the control flow to your hook. Common techniques include using a relative or absolute jump instruction, or even a 
-         trampoline function.
+  Explore different methods for redirecting the control flow to your hook. Common techniques include using a relative or absolute jump instruction, or even a 
+  trampoline function.
 
 - Function Parameters :
-         If the hooked function takes parameters, understand how they are passed and accessed. Your hook function should handle these parameters correctly to avoid 
-         unexpected behavior.
+  If the hooked function takes parameters, understand how they are passed and accessed. Your hook function should handle these parameters correctly to avoid 
+  unexpected behavior.
 
 - Thread Safety :
-         Consider the thread safety of your hook. If the target function is called by multiple threads simultaneously, ensure your hook can handle this scenario 
-         without causing race conditions.
+  Consider the thread safety of your hook. If the target function is called by multiple threads simultaneously, ensure your hook can handle this scenario 
+  without causing race conditions.
 
 - Persistence :
-         Depending on your use case, you might want the hook to persist across sessions or restarts. Explore techniques for making your changes endure beyond a 
-         single execution of the target application.
+  Depending on your use case, you might want the hook to persist across sessions or restarts. Explore techniques for making your changes endure beyond a 
+  single execution of the target application.
 
 - Anti-Debugging Measures :
-         Some applications implement anti-debugging measures. Be aware of this and implement countermeasures if necessary to ensure the stability of your hook in a 
-         debugging environment.
+  Some applications implement anti-debugging measures. Be aware of this and implement countermeasures if necessary to ensure the stability of your hook in a 
+  debugging environment.
 
 - Dynamic Address Resolution :
-         Consider how you'll dynamically resolve addresses of functions you want to hook, especially if they reside in external libraries. Techniques like manual DLL 
-         loading or using function pointers can be employed.
+  Consider how you'll dynamically resolve addresses of functions you want to hook, especially if they reside in external libraries. Techniques like manual DLL 
+  loading or using function pointers can be employed.
 
 - Compatibility :
-         Ensure your inline hook is compatible with different operating systems and compiler versions. Factors like calling conventions and memory layout may vary.
+  Ensure your inline hook is compatible with different operating systems and compiler versions. Factors like calling conventions and memory layout may vary.
 
 - Documentation and Resources :
-         Refer to documentation for the compiler and platform you're working with. Additionally, explore online resources, forums, and community discussions related 
-         to inline hooking for valuable insights.
+  Refer to documentation for the compiler and platform you're working with. Additionally, explore online resources, forums, and community discussions related 
+  to inline hooking for valuable insights.
 
 
 ________________________________________________________________________________________________________________________________________________
