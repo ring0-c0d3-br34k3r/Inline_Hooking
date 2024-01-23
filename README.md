@@ -371,13 +371,23 @@ void InstallHook() {
 
 - Installing the Hook :
   This function "void InstallHook()" is responsible for installing the hook.
-  this "originalMessageBoxA = (MessageBoxAFunc)GetProcAddress(GetModuleHandleA("user32.dll"), "MessageBoxA");" Gets the address of the original MessageBoxA function from the "user32.dll" module.
+  
+  this "originalMessageBoxA = (MessageBoxAFunc)GetProcAddress(GetModuleHandleA("user32.dll"), "MessageBoxA");" Gets the address of the original MessageBoxA function 
+  from the "user32.dll" module.
+  
   This "VirtualProtect(originalMessageBoxA, sizeof(int), PAGE_EXECUTE_READWRITE, &oldProtect);" Makes the memory of the target function writable.
+
   This "memcpy(originalBytes, originalMessageBoxA, sizeof(int));" Original Byte Storing him to for return in unhooking function
-  This " DWORD relativeAddress = (DWORD)HookedMessageBoxA - (DWORD)originalMessageBoxA - 5;" Calculates the relative address for the jump instruction. Fo9 mn had functions 
-  We Will take 5 bit for put the JMP  | See : https://www.malwaretech.com/wp-content/uploads/2015/01/CodeFlow.png 
-  This "*(BYTE*)originalMessageBoxA = 0xE9;" Writes the jump opcode to the beginning of the original function | bm3na akhor 3wad tkhdm originalMessageBoxA radi tkhdm JMP (0xE9).
+
+  This " DWORD relativeAddress = (DWORD)HookedMessageBoxA - (DWORD)originalMessageBoxA - 5;" Calculates the relative address for the jump instruction. Fo9 mn had 
+  functions We Will take 5 bit for put the JMP
+  - See    :    https://www.malwaretech.com/wp-content/uploads/2015/01/CodeFlow.png
+ 
+  This "*(BYTE*)originalMessageBoxA = 0xE9;" Writes the jump opcode to the beginning of the original function | bm3na akhor 3wad tkhdm originalMessageBoxA radi tkhdm 
+  JMP (0xE9).
+
   This "*(DWORD*)((DWORD)originalMessageBoxA + 1) = relativeAddress;" Writes the relative address for the jump instruction.
+
   This Again "VirtualProtect(originalMessageBoxA, sizeof(int), oldProtect, &oldProtect);" For Restores the original memory protection.
 
 
