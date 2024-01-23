@@ -393,8 +393,7 @@ void InstallHook() {
   functions We Will take 5 bit for put the JMP
   - See    :    https://www.malwaretech.com/wp-content/uploads/2015/01/CodeFlow.png
  
-  This "*(BYTE*)originalMessageBoxA = 0xE9;" Writes the jump opcode to the beginning of the original function | bm3na akhor 3wad tkhdm originalMessageBoxA radi tkhdm 
-  JMP (0xE9).
+  This "*(BYTE*)originalMessageBoxA = 0xE9;" Writes the jump opcode to the beginning of the original function
 
   This "*(DWORD*)((DWORD)originalMessageBoxA + 1) = relativeAddress;" Writes the relative address for the jump instruction.
 
