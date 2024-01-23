@@ -153,7 +153,8 @@ _ This example assumes a basic understanding of C++ and Windows API.MessageBoxA 
 ________________________________________________________________________________________________________________________________________________
 
 
-# let's go through a more detailed example with full source code for inline hooking. In this example, we'll hook the MessageBoxA function in a Windows application using a detouring technique.
+# let's go through a more detailed example with full source code for inline hooking. 
+_ In this example, we'll hook the MessageBoxA function in a Windows application using a detouring technique.
 
 
 
@@ -161,7 +162,6 @@ ________________________________________________________________________________
 
 
 #include <Windows.h>
-
 
 
 
@@ -292,7 +292,7 @@ MessageBoxAFunc originalMessageBoxA = nullptr;
   #include <Windows.h> : This header includes declarations for Windows API functions and types. It's necessary for interacting with the Windows operating system.
   #include <iostream>  : This header is for input and output operations and is used here for printing messages to the console.
   
-  Note : i fond problem in github; the headers is hiden, so dont forget him
+  _ Note : i fond problem in github; the headers is hiden, so dont forget him
 
 
 
@@ -641,8 +641,7 @@ DWORD relativeAddress = (DWORD)HookedMessageBoxA - (DWORD)originalMessageBoxA - 
 
 ________________________________________________________________________________________________________________________________________________
 
-# let's explained this part of code deeeeply "*(DWORD*)((DWORD)originalMessageBoxA + 1) = 
-  relativeAddress;" And break Down its functionality with an example : 
+# let's explained this part of code deeeeply "*(DWORD*)((DWORD)originalMessageBoxA + 1) = relativeAddress;" And break Down its functionality with an example : 
 
 
 
