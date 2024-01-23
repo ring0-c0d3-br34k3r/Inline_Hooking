@@ -370,49 +370,56 @@ void InstallHook() {
 
 
 - Installing the Hook :
-  void InstallHook(): This function is responsible for installing the hook.
-  originalMessageBoxA = (MessageBoxAFunc)GetProcAddress(GetModuleHandleA("user32.dll"), "MessageBoxA");: Gets the address of the original MessageBoxA function from 
-  the "user32.dll" module.
-  VirtualProtect(originalMessageBoxA, sizeof(int), PAGE_EXECUTE_READWRITE, &oldProtect);: Makes the memory of the target function writable.
-  memcpy(originalBytes, originalMessageBoxA, sizeof(int));: Original Byte rankhznohom bach nrj3ohom mn b3d ila khlinahomribda ytzkk 3lina l EDR xaxaxa
-  DWORD relativeAddress = (DWORD)HookedMessageBoxA - (DWORD)originalMessageBoxA - 5;: Calculates the relative address for the jump instruction. Fo9 mn had functions 
-  radi nakhdo wa7d l 5 bit bach n7to fihom l JMP mn B3d  |  https://www.malwaretech.com/wp-content/uploads/2015/01/CodeFlow.png
-  *(BYTE*)originalMessageBoxA = 0xE9;: Writes the jump opcode to the beginning of the original function | bm3na akhor 3wad tkhdm originalMessageBoxA radi tkhdm JMP 
-  (0xE9).
-  *(DWORD*)((DWORD)originalMessageBoxA + 1) = relativeAddress;: Writes the relative address for the jump instruction.
-  VirtualProtect(originalMessageBoxA, sizeof(int), oldProtect, &oldProtect);: Restores the original memory protection.
+  This function "void InstallHook()" is responsible for installing the hook.
+  this "originalMessageBoxA = (MessageBoxAFunc)GetProcAddress(GetModuleHandleA("user32.dll"), "MessageBoxA");" Gets the address of the original MessageBoxA function from the "user32.dll" module.
+  This "VirtualProtect(originalMessageBoxA, sizeof(int), PAGE_EXECUTE_READWRITE, &oldProtect);" Makes the memory of the target function writable.
+  This "memcpy(originalBytes, originalMessageBoxA, sizeof(int));" Original Byte Storing him to for return in unhooking function
+  This " DWORD relativeAddress = (DWORD)HookedMessageBoxA - (DWORD)originalMessageBoxA - 5;" Calculates the relative address for the jump instruction. Fo9 mn had functions 
+  We Will take 5 bit for put the JMP  | See : https://www.malwaretech.com/wp-content/uploads/2015/01/CodeFlow.png 
+  This "*(BYTE*)originalMessageBoxA = 0xE9;" Writes the jump opcode to the beginning of the original function | bm3na akhor 3wad tkhdm originalMessageBoxA radi tkhdm JMP (0xE9).
+  This "*(DWORD*)((DWORD)originalMessageBoxA + 1) = relativeAddress;" Writes the relative address for the jump instruction.
+  This Again "VirtualProtect(originalMessageBoxA, sizeof(int), oldProtect, &oldProtect);" For Restores the original memory protection.
 
 
 
 
 
-// Function to uninstall the hook and restore the original function
+- Function to uninstall the hook and restore the original function
+
 BYTE originalBytes[sizeof(int)];
 void UninstallHook() {
-    // Ensure the target function's memory is writable
+
+    - Ensure the target function's memory is writable
+    
     DWORD oldProtect;
     VirtualProtect(originalMessageBoxA, sizeof(int), PAGE_EXECUTE_READWRITE, &oldProtect);
 
-    // Restore the original bytes of the target function
+    - Restore the original bytes of the target function
+    
     memcpy(originalMessageBoxA, &originalBytes, sizeof(int));
 
-    // Restore original memory protection
+    - Restore original memory protection
+    
     VirtualProtect(originalMessageBoxA, sizeof(int), oldProtect, &oldProtect);
 }
 
 
 - Uninstall the Hook Function :
-  void UninstallHook(): This function is responsible for uninstalling the hook and restoring the original functionality.
-  DWORD oldProtect;: Declares a variable to store the original memory protection of the target function.
-  VirtualProtect(originalMessageBoxA, sizeof(int), PAGE_EXECUTE_READWRITE, &oldProtect);: Makes the memory of the target function writable.
-  memcpy(originalMessageBoxA, &originalBytes, sizeof(int));: Restores the original bytes of the target function using the saved bytes (originalBytes).
-  VirtualProtect(originalMessageBoxA, sizeof(int), oldProtect, &oldProtect);: Restores the original memory protection.
+  This function "void UninstallHook()" is responsible for uninstalling the hook and restoring the original functionality.
+  This "DWORD oldProtect;" Declares a variable to store the original memory protection of the target function.
+  This "VirtualProtect(originalMessageBoxA, sizeof(int), PAGE_EXECUTE_READWRITE, &oldProtect);" Makes the memory of the target function writable.
+  This "memcpy(originalMessageBoxA, &originalBytes, sizeof(int));" Restores the original bytes of the target function using the saved bytes (originalBytes).
+  This "VirtualProtect(originalMessageBoxA, sizeof(int), oldProtect, &oldProtect);" Restores the original memory protection.
 
 
 - Saving Original Bytes :
-  Before installing the hook, you need to save the original bytes of the target function. Add the following line to the InstallHook function: cpp // Save the 
-  original bytes of the target function memcpy(&originalBytes, originalMessageBoxA, sizeof(int)); This line should be placed after obtaining the address of the 
-  original MessageBoxA and before modifying the memory.
+  Before installing the hook, you need to save the original bytes of the target function. Add the following line to the InstallHook function :
+  Save the original bytes of the target function :
+
+  memcpy(&originalBytes, originalMessageBoxA, sizeof(int));
+
+  This line "memcpy(&originalBytes, originalMessageBoxA, sizeof(int));" should be placed after obtaining the address of the original MessageBoxA and before modifying the memory.
+  
 
 
 
@@ -451,33 +458,37 @@ int main() {
 
 ________________________________________________________________________________________________________________________________________________
 - These Are Just appetizers to Know how Inline Hooking is Doing..
-  We Will explain each line here in depth just relax Honey
+-  We Will explain each line here in depth just relax Honey
 ________________________________________________________________________________________________________________________________________________
 
 
 # Lets Dive Deeper into each Part Of the InstallHook Function, using Examples To illustrate The concepts :
 
-// Store original bytes for uninstallation
+- Store original bytes for uninstallation
+
 BYTE originalBytes[sizeof(int)];
 
-// Function to perform the inline hook
+- Function to perform the inline hook
+
 void InstallHook() {
-    // Get the address of the original MessageBoxA
+
+    - Get the address of the original MessageBoxA
+    
     originalMessageBoxA = (MessageBoxAFunc)GetProcAddress(GetModuleHandleA("user32.dll"), "MessageBoxA");
 
 
 - Get the Address of the Original Function :
   In this part, the GetProcAddress function is used to obtain the address of the original MessageBoxA function from the "user32.dll" module.
+  
   originalMessageBoxA = (MessageBoxAFunc)GetProcAddress(GetModuleHandleA("user32.dll"), "MessageBoxA");
+  
   For example, let's say the address of the original MessageBoxA is 0x7FFE1234. Now originalMessageBoxA points to this address.
 
 
 
--
 
+- Ensure the target function's memory is writable
 
-
-// Ensure the target function's memory is writable
 DWORD oldProtect;
 VirtualProtect(originalMessageBoxA, sizeof(int), PAGE_EXECUTE_READWRITE, &oldProtect);
 
@@ -485,32 +496,38 @@ VirtualProtect(originalMessageBoxA, sizeof(int), PAGE_EXECUTE_READWRITE, &oldPro
 - Ensure Writability of the Target Function :
   Here, the VirtualProtect function is used to modify the memory protection of the original MessageBoxA function. This is necessary to make the memory writable so 
   that the hook can be installed.
+  
   VirtualProtect(originalMessageBoxA, sizeof(int), PAGE_EXECUTE_READWRITE, &oldProtect);
+  
   Assume that originalMessageBoxA now points to the address 0x7FFE1234. This function ensures that the memory at 0x7FFE1234 is marked as writable.
 
 
 
--
 
 
 
-// Save the original bytes
+
+- Save the original bytes
+  
 memcpy(originalBytes, originalMessageBoxA, sizeof(int));
 
 
 - Save the Original Bytes :
   The memcpy function is used to copy the original bytes of the target function (in this case, MessageBoxA) to a buffer (originalBytes). This step is crucial for 
   later uninstalling the hook.
+  
   memcpy(originalBytes, originalMessageBoxA, sizeof(int));
+  
   Suppose the first few bytes of MessageBoxA at 0x7FFE1234 are 0x55 0x8B 0xEC 0x83 0xEC. The originalBytes buffer now contains these bytes.
 
 
 
--
+
 
 
  
-// Create the detour (jump) to our hook function
+- Create the detour (jump) to our hook function
+
 DWORD relativeAddress = (DWORD)HookedMessageBoxA - (DWORD)originalMessageBoxA - 5;
 *(BYTE*)originalMessageBoxA = 0xE9; // Jump opcode
 *(DWORD*)((DWORD)originalMessageBoxA + 1) = relativeAddress;
@@ -519,12 +536,16 @@ DWORD relativeAddress = (DWORD)HookedMessageBoxA - (DWORD)originalMessageBoxA - 
 - Create a Detour (Jump) to the Hook Function :
   This part involves creating a jump instruction (detour) at the beginning of the original MessageBoxA function. The jump redirects the execution flow to the custom 
   hook function (HookedMessageBoxA).
+  
   DWORD relativeAddress = (DWORD)HookedMessageBoxA - (DWORD)originalMessageBoxA - 5;
   *(BYTE*)originalMessageBoxA = 0xE9; // Jump opcode
   *(DWORD*)((DWORD)originalMessageBoxA + 1) = relativeAddress;
+  
   The relativeAddress is calculated by finding the offset between HookedMessageBoxA and originalMessageBoxA and subtracting 5 (size of the jump instruction). This 
   offset is then written into the original function, effectively redirecting it.
-  let's combine This Steps with an Example :
+
+
+- let's combine This Steps with an Example :
 
 - Assume The Following :
   originalMessageBoxA initially points to 0x7FFE1234.
@@ -544,10 +565,12 @@ DWORD relativeAddress = (DWORD)HookedMessageBoxA - (DWORD)originalMessageBoxA - 
 -  ||
 
 -  \/
+-  __
 
 
 # Let me Explain to u The Part about Creation a Detour (Jump) to the Hook Function :
-// Create the detour (jump) to our hook function
+- Create the detour (jump) to our hook function
+
 DWORD relativeAddress = (DWORD)HookedMessageBoxA - (DWORD)originalMessageBoxA - 5;
 *(BYTE*)originalMessageBoxA = 0xE9; // Jump opcode
 *(DWORD*)((DWORD)originalMessageBoxA + 1) = relativeAddress;
