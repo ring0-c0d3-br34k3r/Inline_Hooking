@@ -394,6 +394,8 @@ void InstallHook() {
 
 
 
+
+
 - Function to uninstall the hook and restore the original function
 
 BYTE originalBytes[sizeof(int)];
@@ -416,10 +418,16 @@ void UninstallHook() {
 
 - Uninstall the Hook Function :
   This function "void UninstallHook()" is responsible for uninstalling the hook and restoring the original functionality.
+
   This "DWORD oldProtect;" Declares a variable to store the original memory protection of the target function.
+
   This "VirtualProtect(originalMessageBoxA, sizeof(int), PAGE_EXECUTE_READWRITE, &oldProtect);" Makes the memory of the target function writable.
+
   This "memcpy(originalMessageBoxA, &originalBytes, sizeof(int));" Restores the original bytes of the target function using the saved bytes (originalBytes).
+
   This "VirtualProtect(originalMessageBoxA, sizeof(int), oldProtect, &oldProtect);" Restores the original memory protection.
+
+
 
 
 - Saving Original Bytes :
