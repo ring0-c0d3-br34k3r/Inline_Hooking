@@ -697,6 +697,17 @@ ________________________________________________________________________________
   https://github.com/TsudaKageyu/minhook
   https://github.com/microsoft/Detours
   https://github.com/0xp17j8/Hooking-Detours
+
+
+
+  # Some References : 
+    https://blog.securehat.co.uk/process-injection/manually-implementing-inline-function-hooking
+    https://unprotect.it/technique/inline-hooking/
+    https://cplusplus.com/forum/windows/139414/
+    https://www.ired.team/offensive-security/code-injection-process-injection/how-to-hook-windows-api-using-c++
+    https://www.malwaretech.com/2015/01/inline-hooking-for-programmers-part-2.html
+    https://blog.nettitude.com/uk/windows-inline-function-hooking
+    
 ___________________________________________________________________________________________________________________
 - These Are The Most Important points you should understand. And I think u got it xaxaxaxa.
 - Happy Hacking.
