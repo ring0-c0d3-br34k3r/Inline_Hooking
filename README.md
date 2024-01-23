@@ -151,7 +151,7 @@ ________________________________________________________________________________
 
 
 
-#include <Windows.h> #include <iostream>
+#include <Windows.h>
 
 
 
@@ -170,15 +170,21 @@ MessageBoxAFunc originalMessageBoxA = nullptr;
 
 int HookedMessageBoxA(HWND hWnd, LPCSTR lpText, LPCSTR lpCaption, UINT uType) 
 {
+
     - Your hook logic here
+    
     std::cout << "MessageBoxA Hooked!\n";
     std::cout << "Text: " << lpText << "\n";
     std::cout << "Caption: " << lpCaption << "\n";
+
     
     - Call the original function to maintain expected behavior
+    
     int result = originalMessageBoxA(hWnd, lpText, lpCaption, uType);
 
+
     - Additional logic after the original function call
+    
     std::cout << "MessageBoxA Returned: " << result << "\n";
 
     return result;
