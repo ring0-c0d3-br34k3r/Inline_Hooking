@@ -387,9 +387,9 @@ void InstallHook() {
   
   This "VirtualProtect(originalMessageBoxA, sizeof(int), PAGE_EXECUTE_READWRITE, &oldProtect);" Makes the memory of the target function writable.
 
-  This "memcpy(originalBytes, originalMessageBoxA, sizeof(int));" Original Byte Storing him to for return in unhooking function
+  This "memcpy(originalBytes, originalMessageBoxA, sizeof(int));" Original Byte Storing him from "originalMessageBoxA" to "originalBytes" for return in unhooking function
 
-  This " DWORD relativeAddress = (DWORD)HookedMessageBoxA - (DWORD)originalMessageBoxA - 5;" Calculates the relative address for the jump instruction. Fo9 mn had 
+  This " DWORD relativeAddress = (DWORD)HookedMessageBoxA - (DWORD)originalMessageBoxA - 5;" Calculates the relative address for the jump instruction. up thats 
   functions We Will take 5 bit for put the JMP
   - See    :    https://www.malwaretech.com/wp-content/uploads/2015/01/CodeFlow.png
  
