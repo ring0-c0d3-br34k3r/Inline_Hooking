@@ -152,7 +152,7 @@ ________________________________________________________________________________
 
 
 #include <Windows.h>
-#include <iostream>
+=
 
 
 
@@ -269,65 +269,64 @@ ________________________________________________________________________________
 
 
 #include <Windows.h>
-#include <iostream>
 
-// Define the original MessageBoxA function signature
+- Define the original MessageBoxA function signature
+
 using MessageBoxAFunc = int(WINAPI*)(HWND, LPCSTR, LPCSTR, UINT);
-// Function pointer to store the address of the original MessageBoxA
+
+- Function pointer to store the address of the original MessageBoxA
+
 MessageBoxAFunc originalMessageBoxA = nullptr;
 
 
-- Include Headers :
-  #include <Windows.h>: This header includes declarations for Windows API functions and types. It's necessary for interacting with the Windows operating system.
-  #include <iostream>: This header is for input and output operations and is used here for printing messages to the console.
+- Include Headers  
+  #include <Windows.h> : This header includes declarations for Windows API functions and types. It's necessary for interacting with the Windows operating system.
+  #include <iostream>  : This header is for input and output operations and is used here for printing messages to the console.
+  
+  Note : i fond problem in github; the headers is hiden, so dont forget him
 
 
 
 
 
 
-
-- Function Signature and Pointer :
-  using MessageBoxAFunc = int(WINAPI*)(HWND, LPCSTR, LPCSTR, UINT);: This line defines a type alias MessageBoxAFunc for a function pointer type. It represents the 
-  signature of the original MessageBoxA function.
-  MessageBoxAFunc originalMessageBoxA = nullptr;: Declares a function pointer variable originalMessageBoxA to store the address of the original MessageBoxA function.
+- Function Signature and Pointer 
+  This line "using MessageBoxAFunc = int(WINAPI*)(HWND, LPCSTR, LPCSTR, UINT);" defines a type alias MessageBoxAFunc for a function pointer type. It represents the signature of the original MessageBoxA function.
+  This Line "MessageBoxAFunc originalMessageBoxA = nullptr;" Declares a function pointer variable originalMessageBoxA to store the address of the original MessageBoxA function.
 
 
 
+- Our hook function 
 
-
-
-
-// Our hook function
-int HookedMessageBoxA(HWND hWnd, LPCSTR lpText, LPCSTR lpCaption, UINT uType) {
-    // Your hook logic here
+  int HookedMessageBoxA(HWND hWnd, LPCSTR lpText, LPCSTR lpCaption, UINT uType) {
+    
+    - Your hook logic here
+    
     std::cout << "MessageBoxA Hooked!\n";
 
 
-- Hook Function :
-  int HookedMessageBoxA(HWND hWnd, LPCSTR lpText, LPCSTR lpCaption, UINT uType): This is your custom hook function that will be called instead of the original 
-  MessageBoxA.
+- Hook Function 
+  This "int HookedMessageBoxA(HWND hWnd, LPCSTR lpText, LPCSTR lpCaption, UINT uType)" is your custom hook function that will be called instead of the original MessageBoxA.
   Inside this function, you can implement your own logic. In this example, it simply prints a message indicating that MessageBoxA has been hooked.
 
 
 
 
 
-
-
-
-// Call the original function to maintain expected behavior
+- Call the original function to maintain expected behavior
+  
 int result = originalMessageBoxA(hWnd, lpText, lpCaption, uType);
 
-// Additional logic after the original function call
+- Additional logic after the original function call
+
 std::cout << "MessageBoxA Returned: " << result << "\n";
 
 return result;
 }
 
 
-- Calling the Original Function :
-  int result = originalMessageBoxA(hWnd, lpText, lpCaption, uType);: Calls the original MessageBoxA function to maintain the expected behavior.
+- Calling the Original Function 
+  This Line "int result = originalMessageBoxA(hWnd, lpText, lpCaption, uType);" Calls the original MessageBoxA function to maintain the expected behavior.
   After the original function call, additional logic can be added. In this case, it prints the return value of the original MessageBoxA to the console.
 
 
@@ -336,26 +335,36 @@ return result;
 
 
 
-// Function to perform the inline hook
+- Function to perform the inline hook
 void InstallHook() {
-    // Get the address of the original MessageBoxA
+
+    - Get the address of the original MessageBoxA
+  
     originalMessageBoxA = (MessageBoxAFunc)GetProcAddress(GetModuleHandleA("user32.dll"), "MessageBoxA");
 
-    // Ensure the target function's memory is writable
+    - Ensure the target function's memory is writable
+      
     DWORD oldProtect;
     VirtualProtect(originalMessageBoxA, sizeof(int), PAGE_EXECUTE_READWRITE, &oldProtect);
 
 
-    // Save the original bytes
+    - Save the original bytes
+  
     memcpy(originalBytes, originalMessageBoxA, sizeof(int));  
 
 
-    // Create the detour (jump) to our hook function
+    - Create the detour (jump) to our hook function
+  
     DWORD relativeAddress = (DWORD)HookedMessageBoxA - (DWORD)originalMessageBoxA - 5;
-    *(BYTE*)originalMessageBoxA = 0xE9; // Jump opcode
+
+    - Jump opcode
+      
+    *(BYTE*)originalMessageBoxA = 0xE9;
+
+  
     *(DWORD*)((DWORD)originalMessageBoxA + 1) = relativeAddress;
 
-    // Restore original memory protection
+    - Restore original memory protection
     VirtualProtect(originalMessageBoxA, sizeof(int), oldProtect, &oldProtect);
 }
 
