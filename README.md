@@ -53,7 +53,8 @@ ________________________________________________________________________________
 
 
 
-# Inline Hooking in C++! - Inline Hooking is a technique used for intercepting function calls dynamically. Here's a Step By Step guide to get you going :
+# Inline Hooking in C++! 
+_ Inline Hooking is a technique used for intercepting function calls dynamically. Here's a Step By Step guide to get you going :
 
 - Understand the Basics : Inline hooking involves redirecting the flow of a program by replacing the beginning of a function with your own code. Get 
   comfortable with function calls, memory management, and assembly language basics.
