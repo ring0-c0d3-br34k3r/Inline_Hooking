@@ -564,7 +564,6 @@ DWORD relativeAddress = (DWORD)HookedMessageBoxA - (DWORD)originalMessageBoxA - 
  
 -  ||
 
--  \/
 -  __
 
 
