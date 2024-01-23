@@ -140,11 +140,11 @@ ________________________________________________________________________________
 
 
 
+
 ________________________________________________________________________________________________________________________________________________
 
 
-# let's go through a more detailed example with full source code for inline hooking. In this example, we'll hook the MessageBoxA function in a Windows application 
-  using a detouring technique.
+# let's go through a more detailed example with full source code for inline hooking. In this example, we'll hook the MessageBoxA function in a Windows application using a detouring technique.
 
 
 
