@@ -129,7 +129,9 @@ ________________________________________________________________________________
 
 - Call the Original Function :
   Inside, call the original function :
+  
   HookedMessageBoxAcpp int result = MessageBoxA(hWnd, lpText, lpCaption, uType);
+
 
 - Test Thoroughly :
   Compile and run your application. Trigger a call to and observe the behavior.MessageBoxA
