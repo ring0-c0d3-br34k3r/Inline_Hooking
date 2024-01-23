@@ -46,32 +46,32 @@ ________________________________________________________________________________
 
 
 
-# Inline Hooking in C++! - Inline Hooking is a technique used for intercepting function calls dynamically. Here's a step-by-step guide to get you going:
+# Inline Hooking in C++! - Inline Hooking is a technique used for intercepting function calls dynamically. Here's a Step By Step guide to get you going :
 
-- 1   _  Understand the Basics: Inline hooking involves redirecting the flow of a program by replacing the beginning of a function with your own code. Get 
-         comfortable with function calls, memory management, and assembly language basics.
+- Understand the Basics: Inline hooking involves redirecting the flow of a program by replacing the beginning of a function with your own code. Get 
+  comfortable with function calls, memory management, and assembly language basics.
 
-- 2   _  Choose a Target: Decide which function you want to hook. It's often helpful to choose a function that's part of a library or system DLL.
+- Choose a Target: Decide which function you want to hook. It's often helpful to choose a function that's part of a library or system DLL.
 
-- 3   _  Learn Assembly: Inline Hooking often involves working at the assembly level. Familiarize yourself with the assembly language, especially related to your 
-         target platform (x86 or x64).
+- Learn Assembly: Inline Hooking often involves working at the assembly level. Familiarize yourself with the assembly language, especially related to your 
+  target platform (x86 or x64).
 
-- 4   _  Study the Target Function: Analyze the assembly code of the function you want to hook. Understand its prologue and epilogue, and identify the bytes you'll 
-         be modifying.
+- Study the Target Function: Analyze the assembly code of the function you want to hook. Understand its prologue and epilogue, and identify the bytes you'll 
+  be modifying.
 
-- 5   _  Write Your Hook: Create a function that will replace the original function. Ensure it does what you need and doesn't break the existing flow.
+- Write Your Hook: Create a function that will replace the original function. Ensure it does what you need and doesn't break the existing flow.
 
-- 6   _  Memory Permissions: Understand and modify the memory permissions to make the target function writable.
+- Memory Permissions: Understand and modify the memory permissions to make the target function writable.
 
-- 7   _  Replace the Function Start: Overwrite the initial bytes of the target function with a jump to your hook function. Make sure to save the overwritten bytes 
-         and restore them when needed.
+- Replace the Function Start: Overwrite the initial bytes of the target function with a jump to your hook function. Make sure to save the overwritten bytes 
+  and restore them when needed.
 
-- 8   _  Call the Original Function: Within your hook function, call the original function to maintain the expected behavior. You can do this by jumping back to the 
-         original code after executing your hook.
+- Call the Original Function: Within your hook function, call the original function to maintain the expected behavior. You can do this by jumping back to the 
+  original code after executing your hook.
 
-- 9   _  Error Handling: Implement error handling to gracefully handle unexpected situations.
+- Error Handling: Implement error handling to gracefully handle unexpected situations.
 
-- 10  _  Test Thoroughly: Test your inline hook in a controlled environment. Ensure it behaves as expected and doesn't cause unintended consequences
+- Test Thoroughly: Test your inline hook in a controlled environment. Ensure it behaves as expected and doesn't cause unintended consequences
 
 
 
