@@ -78,8 +78,7 @@ ________________________________________________________________________________
 ________________________________________________________________________________________________________________________________________________
 
 
-# Let's consider a simple scenario where we want to hook the function in a Windows application. This example assumes a basic understanding of C++ and Windows 
-  API.MessageBoxA
+# Let's consider a simple scenario where we want to hook the function in a Windows application. This example assumes a basic understanding of C++ and Windows API.MessageBoxA
 
 
 - 1   _  Choose a Target:
