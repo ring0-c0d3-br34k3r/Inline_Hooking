@@ -370,6 +370,7 @@ void InstallHook() {
 
 
 - Installing the Hook :
+
   This function "void InstallHook()" is responsible for installing the hook.
   
   this "originalMessageBoxA = (MessageBoxAFunc)GetProcAddress(GetModuleHandleA("user32.dll"), "MessageBoxA");" Gets the address of the original MessageBoxA function 
@@ -432,18 +433,20 @@ void UninstallHook() {
 
 
 - Saving Original Bytes :
+
   Before installing the hook, you need to save the original bytes of the target function. Add the following line to the InstallHook function :
   Save the original bytes of the target function :
 
   memcpy(&originalBytes, originalMessageBoxA, sizeof(int));
 
-  This line "memcpy(&originalBytes, originalMessageBoxA, sizeof(int));" should be placed after obtaining the address of the original MessageBoxA and before modifying the memory.
+  This line "memcpy(&originalBytes, originalMessageBoxA, sizeof(int));" should be placed after obtaining the address of the original MessageBoxA and before modifying 
+  the memory.
   
 
 
 
 
-// Entry point of the program
+- Entry point of the program
 int main() {
     // Install the hook
     InstallHook();
@@ -460,6 +463,7 @@ int main() {
 
 
 - Main Function :
+
   The main function is the entry point of the program.
   InstallHook();: Calls the InstallHook function to install the hook.
   MessageBoxA(nullptr, "Hello, Inline Hooking!", "Hook Example", MB_OK);: Triggers a call to the hooked MessageBoxA.
@@ -470,6 +474,7 @@ int main() {
 
 
 - Unhooking in the Main Function :
+
   In the main function, after triggering the call to MessageBoxA, the UninstallHook function is called to remove the hook and restore the original functionality.
   Keep in mind that unhooking is optional and depends on your specific requirements. In some cases, hooks may need to be kept in place for the duration of the 
   program's execution. In other cases, unhooking may be necessary to ensure that the program's behavior returns to normal.
@@ -477,7 +482,7 @@ int main() {
 
 ________________________________________________________________________________________________________________________________________________
 - These Are Just appetizers to Know how Inline Hooking is Doing..
--  We Will explain each line here in depth just relax Honey
+- We Will explain each line here in depth just relax Honey
 ________________________________________________________________________________________________________________________________________________
 
 
