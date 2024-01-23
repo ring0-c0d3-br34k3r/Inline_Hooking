@@ -289,8 +289,10 @@ MessageBoxAFunc originalMessageBoxA = nullptr;
 
 
 - Include Headers  
-  #include <Windows.h> : This header includes declarations for Windows API functions and types. It's necessary for interacting with the Windows operating system.
-  #include <iostream>  : This header is for input and output operations and is used here for printing messages to the console.
+  #include <Windows.h> :
+  This header includes declarations for Windows API functions and types. It's necessary for interacting with the Windows operating system.
+  #include <iostream>  :
+  This header is for input and output operations and is used here for printing messages to the console.
   
   _ Note : i fond problem in github; the headers is hiden, so dont forget him
 
