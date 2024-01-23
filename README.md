@@ -152,16 +152,22 @@ ________________________________________________________________________________
 
 
 #include <Windows.h>
+
 #include <iostream>
 
 
 - Define the original MessageBoxA function signature
+- 
 using MessageBoxAFunc = int(WINAPI*)(HWND, LPCSTR, LPCSTR, UINT);
 
+
 - Function pointer to store the address of the original MessageBoxA
+- 
 MessageBoxAFunc originalMessageBoxA = nullptr;
 
+
 - Our hook function
+- 
 int HookedMessageBoxA(HWND hWnd, LPCSTR lpText, LPCSTR lpCaption, UINT uType) 
 {
     - Your hook logic here
@@ -178,34 +184,53 @@ int HookedMessageBoxA(HWND hWnd, LPCSTR lpText, LPCSTR lpCaption, UINT uType)
     return result;
 }
 
+
 - Function to perform the inline hook
+  
 void InstallHook() {
+
     - Get the address of the original MessageBoxA
+    
     originalMessageBoxA = (MessageBoxAFunc)GetProcAddress(GetModuleHandleA("user32.dll"), "MessageBoxA");
 
+
     - Ensure the target function's memory is writable
+    
     DWORD oldProtect;
     VirtualProtect(originalMessageBoxA, sizeof(int), PAGE_EXECUTE_READWRITE, &oldProtect);
 
+
     - Create the detour (jump) to our hook function
+    
     DWORD relativeAddress = (DWORD)HookedMessageBoxA - (DWORD)originalMessageBoxA - 5;
     *(BYTE*)originalMessageBoxA = 0xE9; // Jump opcode
     *(DWORD*)((DWORD)originalMessageBoxA + 1) = relativeAddress;
 
+
     - Restore original memory protection
+    
     VirtualProtect(originalMessageBoxA, sizeof(int), oldProtect, &oldProtect);
 }
 
+
 - Entry point of the program
+  
 int main() {
+
     - Install the hook
+    
     InstallHook();
 
+
     - Trigger a call to MessageBoxA
+    
     MessageBoxA(nullptr, "Hello, Inline Hooking!", "Hook Example", MB_OK);
 
+
     - Unhook (optional, depending on your use case)
+    
     - ... (restore the original bytes and cleanup)
+    
 
     return 0;
 }
@@ -219,11 +244,9 @@ int main() {
 
 # This example involves :
 
-- Installing the Hook: The InstallHook function gets the address of the original MessageBoxA, makes the memory writable, and creates a detour to our 
-  HookedMessageBoxA function.
+- Installing the Hook: The InstallHook function gets the address of the original MessageBoxA, makes the memory writable, and creates a detour to our HookedMessageBoxA function.
 
-- Hook Function: HookedMessageBoxA is our custom function that gets called instead of the original MessageBoxA. It prints information and then calls the 
-  original function to maintain expected behavior.
+- Hook Function: HookedMessageBoxA is our custom function that gets called instead of the original MessageBoxA. It prints information and then calls the original function to maintain expected behavior.
 
 - Testing: In the main function, we trigger a call to MessageBoxA to see our hook in action.
 
