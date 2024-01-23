@@ -86,7 +86,8 @@ _ Inline Hooking is a technique used for intercepting function calls dynamically
 ________________________________________________________________________________________________________________________________________________
 
 
-# Let's consider a simple scenario where we want to hook the function in a Windows application. This example assumes a basic understanding of C++ and Windows API.MessageBoxA
+# Let's consider a simple scenario where we want to hook the function in a Windows application. 
+_ This example assumes a basic understanding of C++ and Windows API.MessageBoxA :
 
 
 - Choose a Target :
