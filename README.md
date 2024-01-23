@@ -153,55 +153,59 @@ ________________________________________________________________________________
 
 #include <Windows.h>
 #include <iostream>
-// Define the original MessageBoxA function signature
+
+
+- Define the original MessageBoxA function signature
 using MessageBoxAFunc = int(WINAPI*)(HWND, LPCSTR, LPCSTR, UINT);
-// Function pointer to store the address of the original MessageBoxA
+
+- Function pointer to store the address of the original MessageBoxA
 MessageBoxAFunc originalMessageBoxA = nullptr;
-// Our hook function
+
+- Our hook function
 int HookedMessageBoxA(HWND hWnd, LPCSTR lpText, LPCSTR lpCaption, UINT uType) 
 {
-    // Your hook logic here
+    - Your hook logic here
     std::cout << "MessageBoxA Hooked!\n";
     std::cout << "Text: " << lpText << "\n";
     std::cout << "Caption: " << lpCaption << "\n";
     
-    // Call the original function to maintain expected behavior
+    - Call the original function to maintain expected behavior
     int result = originalMessageBoxA(hWnd, lpText, lpCaption, uType);
 
-    // Additional logic after the original function call
+    - Additional logic after the original function call
     std::cout << "MessageBoxA Returned: " << result << "\n";
 
     return result;
 }
 
-// Function to perform the inline hook
+- Function to perform the inline hook
 void InstallHook() {
-    // Get the address of the original MessageBoxA
+    - Get the address of the original MessageBoxA
     originalMessageBoxA = (MessageBoxAFunc)GetProcAddress(GetModuleHandleA("user32.dll"), "MessageBoxA");
 
-    // Ensure the target function's memory is writable
+    - Ensure the target function's memory is writable
     DWORD oldProtect;
     VirtualProtect(originalMessageBoxA, sizeof(int), PAGE_EXECUTE_READWRITE, &oldProtect);
 
-    // Create the detour (jump) to our hook function
+    - Create the detour (jump) to our hook function
     DWORD relativeAddress = (DWORD)HookedMessageBoxA - (DWORD)originalMessageBoxA - 5;
     *(BYTE*)originalMessageBoxA = 0xE9; // Jump opcode
     *(DWORD*)((DWORD)originalMessageBoxA + 1) = relativeAddress;
 
-    // Restore original memory protection
+    - Restore original memory protection
     VirtualProtect(originalMessageBoxA, sizeof(int), oldProtect, &oldProtect);
 }
 
-// Entry point of the program
+- Entry point of the program
 int main() {
-    // Install the hook
+    - Install the hook
     InstallHook();
 
-    // Trigger a call to MessageBoxA
+    - Trigger a call to MessageBoxA
     MessageBoxA(nullptr, "Hello, Inline Hooking!", "Hook Example", MB_OK);
 
-    // Unhook (optional, depending on your use case)
-    // ... (restore the original bytes and cleanup)
+    - Unhook (optional, depending on your use case)
+    - ... (restore the original bytes and cleanup)
 
     return 0;
 }
@@ -215,17 +219,15 @@ int main() {
 
 # This example involves :
 
-- 1   _  Installing the Hook: The InstallHook function gets the address of the original MessageBoxA, makes the memory writable, and creates a detour to our 
-         HookedMessageBoxA function.
+- Installing the Hook: The InstallHook function gets the address of the original MessageBoxA, makes the memory writable, and creates a detour to our 
+  HookedMessageBoxA function.
 
-- 2   _  Hook Function: HookedMessageBoxA is our custom function that gets called instead of the original MessageBoxA. It prints information and then calls the 
-         original function to maintain expected behavior.
+- Hook Function: HookedMessageBoxA is our custom function that gets called instead of the original MessageBoxA. It prints information and then calls the 
+  original function to maintain expected behavior.
 
-- 3   _  Testing: In the main function, we trigger a call to MessageBoxA to see our hook in action.
+- Testing: In the main function, we trigger a call to MessageBoxA to see our hook in action.
 
-
-       Keep in mind that this is a basic example, and real-world scenarios may involve additional considerations, error handling, and cleanup steps. Feel free to ask 
-       if you have questions about specific parts of the code or need further clarification!
+       
 
 
 ________________________________________________________________________________________________________________________________________________
