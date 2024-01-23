@@ -81,20 +81,22 @@ ________________________________________________________________________________
 # Let's consider a simple scenario where we want to hook the function in a Windows application. This example assumes a basic understanding of C++ and Windows API.MessageBoxA
 
 
-- 1   _  Choose a Target:
-         Target Function: (A for ANSI version)MessageBoxA
+- Choose a Target :
+  Target Function : (A for ANSI version)MessageBoxA
 
-- 2   _  Study the Target Function:
-         Check the function signature and its assembly code.
-         Identify the prologue and epilogue. Here's a simplified version: ```assembly MessageBoxA_Prologue: ; Prologue setup here
+- Study the Target Function:
+  Check the function signature and its assembly code.
+  Identify the prologue and epilogue. Here's a simplified version: ```assembly MessageBoxA_Prologue: ; Prologue setup here
 
-         MessageBoxA: ; Function code here
+  MessageBoxA : ; Function code here
 
-         MessageBoxA_Epilogue: ; Epilogue cleanup here ```
+  MessageBoxA_Epilogue : ; Epilogue cleanup here ```
 
-- 3   _  Write Your Hook:
-         Create a function that will replace . Let's call it : ```cpp int HookedMessageBoxA(HWND hWnd, LPCSTR lpText, LPCSTR lpCaption, UINT uType) {
-         // Your hook logic here // ...MessageBoxAHookedMessageBoxA
+- Write Your Hook :
+  Create a function that will replace . Let's call it :
+  
+  ```cpp int HookedMessageBoxA(HWND hWnd, LPCSTR lpText, LPCSTR lpCaption, UINT uType) {
+  // Your hook logic here // ...MessageBoxAHookedMessageBoxA
 
          Call the original function to maintain expected behavior
          int result = MessageBoxA(hWnd, lpText, lpCaption, uType);
@@ -105,29 +107,34 @@ ________________________________________________________________________________
          return result;
          } ```
 
-- 4   _  Memory Permissions:
-         Ensure the target function's memory is writable. Use : VirtualProtectcpp DWORD oldProtect; VirtualProtect(MessageBoxA, hookSize, PAGE_EXECUTE_READWRITE, 
-         &oldProtect);
+- Memory Permissions :
+  Ensure the target function's memory is writable. Use : VirtualProtectcpp DWORD oldProtect; VirtualProtect(MessageBoxA, hookSize, PAGE_EXECUTE_READWRITE, 
+  &oldProtect);
 
-- 5   _  Replace the Function Start:
-         Overwrite the beginning of with a jump to your hook: ```cpp const int hookSize = 5; // Size of the jump instruction DWORD oldProtect; 
-         VirtualProtect(MessageBoxA, hookSize, PAGE_EXECUTE_READWRITE, &oldProtect);MessageBoxA
+- Replace the Function Start :
+  Overwrite the beginning of with a jump to your hook :
+  ```cpp const int hookSize = 5; // Size of the jump instruction DWORD oldProtect; 
+  VirtualProtect(MessageBoxA, hookSize, PAGE_EXECUTE_READWRITE, &oldProtect);MessageBoxA
 
-         Write the jump instruction (E9 is the opcode for a relative jump) (BYTE)MessageBoxA = 0xE9;
+  Write the jump instruction (E9 is the opcode for a relative jump) :
+  (BYTE)MessageBoxA = 0xE9;
 
-         Calculate the relative address DWORD relativeAddress = (DWORD)HookedMessageBoxA - (DWORD)MessageBoxA - 5;
+  Calculate the relative address :
+  DWORD relativeAddress = (DWORD)HookedMessageBoxA - (DWORD)MessageBoxA - 5;
 
-         Write the relative address (DWORD)((DWORD)MessageBoxA + 1) = relativeAddress;
+  Write the relative address :
+  (DWORD)((DWORD)MessageBoxA + 1) = relativeAddress;
 
-         VirtualProtect(MessageBoxA, hookSize, oldProtect, &oldProtect); ```
+  VirtualProtect(MessageBoxA, hookSize, oldProtect, &oldProtect); ```
 
-- 6   _  Call the Original Function:
-         Inside , call the original function: HookedMessageBoxAcpp int result = MessageBoxA(hWnd, lpText, lpCaption, uType);
+- Call the Original Function :
+  Inside, call the original function :
+  HookedMessageBoxAcpp int result = MessageBoxA(hWnd, lpText, lpCaption, uType);
 
-- 7   _  Test Thoroughly:
-         Compile and run your application. Trigger a call to and observe the behavior.MessageBoxA
-         This is a basic example, and in real-world scenarios, you might encounter additional challenges. Always be mindful of the application's architecture, handle 
-         different cases, and test extensively.
+- Test Thoroughly :
+  Compile and run your application. Trigger a call to and observe the behavior.MessageBoxA
+  This is a basic example, and in real-world scenarios, you might encounter additional challenges. Always be mindful of the application's architecture, handle 
+  different cases, and test extensively.
 
 
 
