@@ -157,17 +157,17 @@ ________________________________________________________________________________
 
 
 - Define the original MessageBoxA function signature
-- 
+
 using MessageBoxAFunc = int(WINAPI*)(HWND, LPCSTR, LPCSTR, UINT);
 
 
 - Function pointer to store the address of the original MessageBoxA
-- 
+
 MessageBoxAFunc originalMessageBoxA = nullptr;
 
 
 - Our hook function
-- 
+
 int HookedMessageBoxA(HWND hWnd, LPCSTR lpText, LPCSTR lpCaption, UINT uType) 
 {
     - Your hook logic here
